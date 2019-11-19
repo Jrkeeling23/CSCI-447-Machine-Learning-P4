@@ -44,7 +44,7 @@ class NeuralNetwork:
                 for f in range(len(layers[1].nodes)):
                     layers[0].nodes[j].outgoing_weights.append(Weight(layers[0].nodes[j], layers[1].nodes[f]))
             for f in range(len(layers[1].nodes)):
-                for j in range(len(layers[0])):
+                for j in range(len(layers[0].nodes)):
                     layers[1].nodes[f].incoming_weights.append(layers[0].nodes[j].outgoing_weights[f])
         return layers, outputs
 
