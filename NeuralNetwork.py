@@ -48,6 +48,26 @@ class NeuralNetwork:
                     layers[1].nodes[f].incoming_weights.append(layers[0].nodes[j].outgoing_weights[f])
         return layers, outputs
 
+    def vectorize(self, layers):
+        vector = []
+        for i in range(1, len(layers), 1):
+            for n in range(len(layers[i].nodes)):
+                for w in range(len(layers[i].nodes[n].incoming_weights)):
+                    vector.append(layers[i].nodes[n].incoming_weights[w].weight)
+                vector.append(layers[i].nodes[n].bias)
+        return vector
+
+    def networkize(self, layers, vector):
+        j=0
+        new_network = layers.copy()
+        for i in range(1, len(new_network), 1):
+            for n in range(len(new_network[i].nodes)):
+                for w in range(len(new_network[i].nodes[n].incoming_weights)):
+                    new_network[i].nodes[n].incoming_weights[w].weight = vector[j]
+                    j+=1
+                new_network[i].nodes[n].bias = vector[j]
+                j+=1
+        return new_network
 
 
         # point_nets = []
