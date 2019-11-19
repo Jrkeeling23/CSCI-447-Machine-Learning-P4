@@ -130,68 +130,43 @@ class NeuralNetwork:
                     output.append(row[label])
         return sorted(output)
 
-    def back_prop(self, layers, compare):  # oh boy here we go wish me luck
-        # for i in range(len(layers)-1, 0, -1):
-        #     for node in layers[i].nodes:
-        #         node.bias_change += (-(1-node.value)*node.value*(1-node.value))
-        #         for weight in node.incoming_weights:
-        #             weight.weight_change += (-(1-cost)*node.value*(1-node.value)*weight.L_neuron.value)
-        for i in range(len(layers)-1, 0, -1):
-            j = 0
+    def gradient_descent(self, layers, eta, alpha, comparison, group):
+        for f in range(len(group)):
+            self.backpropagation(layers, group[f], comparison[f])
+        for i in range(1, len(layers)-1, 1):
             for node in layers[i].nodes:
-                if i == len(layers)-1:
-                    # print(compare)
-                    node.delta = (node.value-compare[j])*node.value*(1-node.value)
-                    # print(type(-(compare[j]-node.value)*node.value*(1-node.value)))
-                    j += 1
-                else:
-                    start = 0
-                    for weight in node.outgoing_weights:
-                        start += weight.R_neuron.delta * weight.weight
-                    node.delta = node.value*(1-node.value)*start
-                node.bias_change += node.delta
-                # print(node.bias_change)
-                for weight in node.incoming_weights:
-                    weight.weight_change += weight.L_neuron.value*node.delta
-                    # print(weight.weight_change)
-        return
-
-    def gradient_descent(self, layers, eta, alpha, compare, row):
-        for i in range(len(layers)-1, 0, -1):
-            for node in layers[i].nodes:
-                node.prev_bias_change = node.bias_change
+                # node.bias +=
+                node.prev_bias_change = (-eta*node.bias_change/len(group)+alpha*node.prev_bias_change)
+                node.bias += node.prev_bias_change
                 node.bias_change = 0
                 for weight in node.incoming_weights:
-                    weight.prev_change = weight.weight_change
+                    weight.prev_change = (-eta*weight.weight_change/len(group)+alpha*weight.prev_change)
+                    weight.weight += weight.prev_change
                     weight.weight_change = 0
-        for i in range(len(row)):
-            self.sigmoid(layers, row[i])
-            print("adjusting values for different input")  # TODO: remove while recording video
-            self.back_prop(layers, compare[i])
-            print("backpropping")  # TODO: remove while recording video
-        changes = []
-        print("adjusting biases and weights for the last %d inputs" % (len(row)))  # TODO: remove while recording video
-        for j in range(len(layers) - 1, 0, -1):
-            # print(j)
-            for node in layers[j].nodes:
-                # node.prev_bias_change = node.bias_change
-                # print(node.bias_change)
-                # print(len(row))
-                node.bias_change = -eta * node.bias_change/len(row)
-                node.bias += node.bias_change# +alpha*node.prev_bias_change
-                changes.append(node.bias_change)
-                # print(node.bias_change)
-                # print(node.bias_change)
-                for weight in node.incoming_weights:
-                    # weight.prev_change = weight.weight_change
-                    weight.weight_change = -eta*weight.weight_change/len(row)
-                    weight.weight += weight.weight_change# +alpha*weight.prev_change
-                    changes.append(weight.weight_change)
-                    # print(weight.weight_change)
-        return changes, len(changes)
+        return  # need to get something to return still
 
-    # def run_it(self, train, hidden_layers, hidden_nodes, eta, alpha):
-    #     network =
+    def backpropagation(self, layers, input, compare):
+        self.sigmoid(layers, input)
+        for i in range(len(layers)-1, 1, -1):
+            if i == len(layers)-1:
+                j=0
+                for node in layers[i].nodes:
+                    node.delta = -(compare[j] - node.value) * node.value * (1 - node.value)
+                    node.bias_change += node.delta
+                    j += 1
+                    for weight in node.incoming_weights:
+                        weight.weight_change += node.delta * weight.weight
+            else:
+                for node in layers[i].nodes:
+                    summer = 0
+                    for weight in node.outgoing_weights:
+                        summer += weight.R_neuron.delta * weight.weight
+                    node.delta = node.value * (1 - node.value) * summer
+                    node.bias_change += node.delta
+                    for weight in node.incoming_weights:
+                        weight.weight_change += node.bias * weight.L_neuron.value
+        return
+
 
 
 class NetworkClient:
