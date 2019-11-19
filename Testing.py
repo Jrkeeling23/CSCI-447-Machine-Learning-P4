@@ -1,11 +1,11 @@
 import unittest
 
-from KMeans import Kmeans
-from PAM import PAM
+# from KMeans import Kmeans
+# from PAM import PAM
 from Data import Data, DataConverter
 import pandas as pd
 import numpy as np
-from Cluster import KNN
+# from Cluster import KNN
 from NeuralNetwork import NeuralNetwork, NetworkClient
 import collections
 
@@ -135,7 +135,7 @@ class MyTestCase(unittest.TestCase):
         df = data.df.sample(n=4)
         data.split_data(data_frame=df)
         network = NeuralNetwork(data_instance=data)
-        network.make_layers(2, 4)
+        network.make_layers(0, 4)
 
     def test_discretize(self):
         data = Data('segmentation', pd.read_csv(r'data/segmentation.data', header=None, skiprows=4), 8, True)

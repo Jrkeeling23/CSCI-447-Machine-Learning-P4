@@ -22,24 +22,30 @@ class NeuralNetwork:
         layers = []
         layers.append(Layer(first_layer_size))
         layers[0].make_nodes()
-        for i in range(no_of_layers):
-            layers.append(Layer(no_of_nodes))
-            layers[i+1].make_nodes()
-            if i+1 == no_of_layers:
-                outputs = self.set_output()
-                layers.append(Layer(len(outputs)))
-                layers[i+2].make_nodes()
-            #     print("sup")
-            # print(i)
-            # print(layers[1].no_of_nodes)
-            for j in range(layers[i].no_of_nodes):
+        if no_of_layers!=0:
+            for i in range(no_of_layers):
+                layers.append(Layer(no_of_nodes))
+                layers[i+1].make_nodes()
+                if i+1 == no_of_layers:
+                    outputs = self.set_output()
+                    layers.append(Layer(len(outputs)))
+                    layers[i+2].make_nodes()
+                for j in range(len(layers[i].nodes)):
+                    for f in range(len(layers[i+1].nodes)):
+                        layers[i].nodes[j].outgoing_weights.append(Weight(layers[i].nodes[j], layers[i+1].nodes[f]))
                 for f in range(len(layers[i+1].nodes)):
-                    layers[i].nodes[j].outgoing_weights.append(Weight(layers[i].nodes[j], layers[i+1].nodes[f]))
-                    layers[i + 1].nodes[f].incoming_weights = layers[i].nodes[j].outgoing_weights
-        for j in range(len(layers[-2].nodes)):
-            for f in range(len(layers[-1].nodes)):
-                layers[-2].nodes[j].outgoing_weights.append(Weight(layers[-2].nodes[j], layers[-1].nodes[f]))
-                layers[-1].nodes[f].incoming_weights = layers[-2].nodes[j].outgoing_weights
+                    for j in range(len(layers[i].nodes)):
+                        layers[i+1].nodes[f].incoming_weights.append(layers[i].nodes[j].outgoing_weights[f])
+        else:
+            outputs = self.set_output()
+            layers.append(Layer(len(outputs)))
+            layers[1].make_nodes()
+            for j in range(len(layers[0].nodes)):
+                for f in range(len(layers[1].nodes)):
+                    layers[0].nodes[j].outgoing_weights.append(Weight(layers[0].nodes[j], layers[1].nodes[f]))
+            for f in range(len(layers[1].nodes)):
+                for j in range(len(layers[0])):
+                    layers[1].nodes[f].incoming_weights.append(layers[0].nodes[j].outgoing_weights[f])
         return layers, outputs
 
 
