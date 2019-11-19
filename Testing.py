@@ -180,6 +180,15 @@ class MyTestCase(unittest.TestCase):
         layers, outputset, network = client.train_it(1, 10, .1, .5, 10)
         print(client.testing(layers, outputset, network))  # prints total
 
+    def test_vectorize_and_back(self):
+        data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
+        df = data.df.sample(n=4)
+        data.split_data(data_frame=df)
+        network = NeuralNetwork(data_instance=data)
+        layers, outputs = network.make_layers(2, 5)
+        vector = network.vectorize(layers)
+        print(vector)
+        new_layers = network.networkize(layers, vector)
 
 if __name__ == '__main__':
     unittest.main()
