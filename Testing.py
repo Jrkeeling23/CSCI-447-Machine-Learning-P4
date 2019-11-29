@@ -8,7 +8,7 @@ import numpy as np
 # from Cluster import KNN
 from NeuralNetwork import NeuralNetwork, NetworkClient
 import collections
-
+from GA import  GA
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
@@ -189,6 +189,14 @@ class MyTestCase(unittest.TestCase):
         vector = network.vectorize(layers)
         print(vector)
         new_layers = network.networkize(layers, vector)
+        print(new_layers)
+
+    def test_ga_init(self):
+        data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
+        df = data.df.sample(n=4)
+        data.split_data(data_frame=df)
+        gen_algo = GA(10,2,data)
+        gen_algo.run_GA()
 
 if __name__ == '__main__':
     unittest.main()
