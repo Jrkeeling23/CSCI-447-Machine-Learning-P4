@@ -9,6 +9,7 @@ import numpy as np
 from NeuralNetwork import NeuralNetwork, NetworkClient
 import collections
 from GA import  GA
+from GA import Chromosome
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
@@ -178,6 +179,7 @@ class MyTestCase(unittest.TestCase):
         data.split_data(data_frame=df)
         client = NetworkClient(data)
         layers, outputset, network = client.train_it(1, 10, .1, .5, 10)
+        print(layers)
         print(client.testing(layers, outputset, network))  # prints total
 
     def test_vectorize_and_back(self):
@@ -195,8 +197,28 @@ class MyTestCase(unittest.TestCase):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
         df = data.df.sample(n=4)
         data.split_data(data_frame=df)
-        gen_algo = GA(10,2,data)
-        gen_algo.run_GA()
+        gen_algo = GA(10, 2, data, max_runs=10000)
+        bestC = gen_algo.run_GA()
+        print(bestC.net_vector)
+        client = NetworkClient(data)
+        network = NeuralNetwork(data)
+        new_Net = network.networkize(bestC.layers, bestC.net_vector)
+        print(client.testing(new_Net, bestC.outputs, bestC.network))
+
+
+    def test_ga_fitness(self):
+        data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
+        df = data.df.sample(n=4)
+        data.split_data(data_frame=df)
+        gen_algo = GA(10, 2, data)
+        network = NeuralNetwork(data_instance=data)
+        layers, outputs = network.make_layers(2, 5)
+        net_vector = network.vectorize(layers)
+        #newPop = Chromosome(net_vector, network, layers)
+        fitness = gen_algo.CalcFitness(network,layers,outputs)
+        print(outputs)
+        print(fitness)
+
 
 if __name__ == '__main__':
     unittest.main()
