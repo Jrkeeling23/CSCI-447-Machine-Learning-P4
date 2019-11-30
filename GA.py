@@ -79,22 +79,33 @@ class GA:
         tourny = []
         indexs = []
         print("Performing Tournament Selection")
+        #print(self.population)
         for i in range(self.t_size):  # tourny to select first parent
             # randomly generate index and add it to tourny
             # add the population member at that random num to tourny1 list
             trandom = random.randint(0, len(self.population)-1)
-            tourny.append(self.population[trandom])
+            #print(trandom)
+            randomChrome = self.population[trandom]
+            #print(randomChrome)
+            #print(type(randomChrome))
+            #print("Actual pop member")
+           # print(self.population[trandom])
+            #print(type(self.population[trandom]))
+
+            tourny.append(randomChrome)
             indexs.append(trandom)
+
+
 
         # get the best of each tourny and use them as parents
         # set first one as most fit so far
-
+        #print(tourny)
         bestSeen = tourny[0]
         bestIndex = indexs[0]
-        for i in range(len(tourny)):
-            if tourny[i].fitness > bestSeen.fitness:
-                bestSeen = tourny[i]
-                bestIndex = indexs[i]
+        for chrome in tourny:
+            if chrome.fitness > bestSeen.fitness:
+                bestSeen = chrome
+                bestIndex = tourny.index(chrome)
 
         print("Returning most fit example in tournament")
         # return best value
@@ -123,15 +134,15 @@ class GA:
         print("Performing Mutation on the Children")
         for i in range(len(childVector1)):
             rand = random.uniform(0, 1)
-            if(rand <= self.mutation_rate):
+            if rand <= self.mutation_rate :
                 # currently limiting the size of the random to current val +- 2
-                new_val = random.uniform(childVector1[i]-2, childVector1[i]+2)
+                new_val = random.uniform(childVector2[i] - 2, childVector2[i] + 2)
                 childVector1[i] = new_val
         for i in range(len(childVector2)):
             rand = random.uniform(0, 1)
-            if(rand <= self.mutation_rate):
+            if rand <= self.mutation_rate :
                 # currently limiting the size of the random to current val +- 2
-                new_val = random.uniform(childVector2[i]-2, childVector2[i]+2)
+                new_val = random.uniform(childVector2[i] - 2, childVector2[i] + 2)
                 childVector2[i] = new_val
 
 
@@ -146,12 +157,12 @@ class GA:
         child1.fitness = self.CalcFitness(child1.network, child1Layers, child1.outputs)
         child2.fitness = self.CalcFitness(child2.network, child2Layers, child2.outputs)
         # compare the fitness of children vs parents, replace parents if better
-        if child1.fitness > parent1.fitness:
+        if child1.fitness >= parent1.fitness:
             # replace the parent
             self.population[index1] = child1
 
-        if child2.fitness > parent2.fitness:
-            self.population[index2] = parent2.fitness
+        if child2.fitness >= parent2.fitness:
+            self.population[index2] = parent2
 
         print("Finished Performing Crossover + Mutation")
 
@@ -174,10 +185,11 @@ class GA:
 
         # go through population and find chromosome with highest fitness, return it's networkized form
         # randomly choose one to start
-        bestChrome = self.population[random.randint(0, len(self.population))]
+        bestChrome = self.population[random.randint(0, len(self.population)-1)]
         # go through all of the pop and return value with highest fitness
         for chrome in self.population:
             if chrome.fitness > bestChrome.fitness:
+                print(chrome.fitness)
                 bestChrome = chrome
 
         print("Returning Chromosome with highest fitness")
