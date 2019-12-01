@@ -30,7 +30,7 @@ class DE:
     # data is a data instance
     # layers is # of layers for NN's
     # nodes is # of nodes in NN's
-    def __init__(self,pop_size, beta, t_size, data, layers=2, nodes=5, crossover_prob=.5, mutation_rate=.01, max_runs=1000):
+    def __init__(self,pop_size, beta, trial_vectors, t_size, data, layers=2, nodes=5, crossover_prob=.5, mutation_rate=.01, max_runs=1000):
         self.t_size = t_size
         self.crossover_prob = crossover_prob
         self.mutation_rate = mutation_rate
@@ -40,6 +40,8 @@ class DE:
         self.layers = layers
         self.nodes = nodes
         self.max_runs = max_runs
+        self.beta = beta
+        self.trial_vectors = trial_vectors
 
     # calculate fitness given some target chromosome
     def CalcFitness(self, network, layers, outputs):
@@ -107,10 +109,10 @@ class DE:
         # return best value
         return bestSeen, bestIndex
 
-    def Binomial_crossover(self, parent1, parent2, index1, index2):
+    def Binomial_crossover(self, parent1, parent2):
         # new empty lists for the vectors of the children
+        # only want 1 child for DE
         childVector1 = []
-        childVector2 = []
         # perform binomial crossover
         print("Performing Binomial Crossover")
         # print(parent1)
@@ -119,10 +121,8 @@ class DE:
             rand = random.uniform(0, 1)
             if rand <= self.crossover_prob:
                 childVector1.append(num1)
-                childVector2.append(num2)
             else:
                 childVector1.append(num2)
-                childVector2.append(num1)
 
         # perform mutation
         print("Performing Mutation on the Children")
@@ -130,37 +130,31 @@ class DE:
             rand = random.uniform(0, 1)
             if rand <= self.mutation_rate :
                 # currently limiting the size of the random to current val +- 2
-                new_val = random.uniform(childVector2[i] - 2, childVector2[i] + 2)
+                new_val = random.uniform(childVector1[i] - 2, childVector1[i] + 2)
                 childVector1[i] = new_val
-        for i in range(len(childVector2)):
-            rand = random.uniform(0, 1)
-            if rand <= self.mutation_rate :
-                # currently limiting the size of the random to current val +- 2
-                new_val = random.uniform(childVector2[i] - 2, childVector2[i] + 2)
-                childVector2[i] = new_val
 
 
 
         # create two new chromosomes for each child
         child1 = Chromosome(childVector1, parent1.network, parent1.layers, parent1.outputs)
-        child2 = Chromosome(childVector2, parent2.network, parent2.layers, parent2.outputs)
         # turn vectors into layers for fitness
         child1Layers = child1.network.networkize(child1.layers, child1.net_vector)
-        child2Layers = child2.network.networkize(child2.layers, child2.net_vector)
         # finish setting up fitness of each child
         child1.fitness = self.CalcFitness(child1.network, child1Layers, child1.outputs)
-        child2.fitness = self.CalcFitness(child2.network, child2Layers, child2.outputs)
         # compare the fitness of children vs parents, replace parents if better
-
+        ret_vector= None
         if child1.fitness >= parent1.fitness:
-            # replace the parent
-            self.population[index1] = child1
-
-        if child2.fitness >= parent2.fitness:
-            # replacee child2's parent
-            self.population[index2] = child2
+            # replace the parent if child better than current pop member (parent 1)
+            ret_vector = child1
+        else:
+            ret_vector = parent1
 
         print("Finished Performing Crossover + Mutation")
+        return ret_vector
+
+
+
+
 
     # run the DE Training algorithm
     def run_DE(self):
@@ -173,3 +167,48 @@ class DE:
                 print("Iteration: ", runs)
             runs += 1
 
+            # go through pop and createe trial vectors
+
+            for i in range(len(self.population)):
+
+                # inital vector v sub 1
+                vector1, index1 = self.Tourny_Selection()
+                trial_vector = vector1.net_vector
+                print("Creating Trial Vector")
+                for i in range(self.trial_vectors):
+                    # create a new trail vector and add to list (thye beta(x2 - x3) part
+                    vector2, index2 = self.Tourny_Selection()
+                    vector3, index3 = self.Tourny_Selection()
+
+                    trail_vec_partial = self.beta * (np.subtract(vector2.net_vector, vector3.net_vector))
+
+
+                    # now calculate the trial vector using these partial vectors
+                    trial_vector = np.add(trial_vector, trail_vec_partial)
+                # create a chromosome to represent trial vector
+                trial_chromosome = Chromosome(trial_vector, self.population[i].network,
+                                              self.population[i].layers, self.population[i].outputs)
+                # get the network form of the vector
+                trial_layers = trial_chromosome.network.networkize(trial_chromosome.layers, trial_chromosome.net_vector)
+                # calculate fitness of that network
+                trial_chromosome.fitness = self.CalcFitness(trial_chromosome.network, trial_layers,
+                                                            trial_chromosome.outputs)
+                # now we need to use mutation to generate a child vector using trail vector and current pops vector
+                self.population[i] = self.Binomial_crossover(self.population[i], trial_chromosome)
+                # moveing on to next pop memeber
+                print("Current Population individual updated, moving on to next individual")
+
+        # finished checking everything, return individual with highest fitness
+        # go through population and find chromosome with highest fitness, return it's networkized form
+        # randomly choose one to start
+        bestChrome = self.population[random.randint(0, len(self.population)-1)]
+        # go through all of the pop and return value with highest fitness
+        for chrome in self.population:
+            if chrome.fitness > bestChrome.fitness:
+                print(chrome.fitness)
+                bestChrome = chrome
+
+        print("Returning Chromosome with highest fitness")
+        # networkC = NeuralNetwork(self.data)
+        # return networkC.networkize(bestChrome.layers, bestChrome.net_vector)
+        return bestChrome

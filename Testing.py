@@ -10,6 +10,7 @@ from NeuralNetwork import NeuralNetwork, NetworkClient
 import collections
 from GA import  GA
 from GA import Chromosome
+from  DE import  DE
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
@@ -208,18 +209,19 @@ class MyTestCase(unittest.TestCase):
         print(client.testing(new_Net, bestC.outputs, bestC.network))
 
 
-    def test_ga_fitness(self):
+    def test_de(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
-        df = data.df.sample(n=4)
+        df = data.df.sample(n=100)
         data.split_data(data_frame=df)
-        gen_algo = GA(10, 2, data)
-        network = NeuralNetwork(data_instance=data)
-        layers, outputs = network.make_layers(2, 5)
-        net_vector = network.vectorize(layers)
-        #newPop = Chromosome(net_vector, network, layers)
-        fitness = gen_algo.CalcFitness(network,layers,outputs)
-        print(outputs)
-        print(fitness)
+        de_algo = DE(10, 1, 2, 4, data, max_runs=1000, mutation_rate=.01)
+        bestC = de_algo.run_DE()
+        print("Best fitting vector")
+        print(bestC.net_vector)
+        client = NetworkClient(data)
+        network = NeuralNetwork(data)
+        new_Net = network.networkize(bestC.layers, bestC.net_vector)
+        print("Printing testing results")
+        print(client.testing(new_Net, bestC.outputs, bestC.network))
 
 
 if __name__ == '__main__':

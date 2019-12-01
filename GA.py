@@ -136,7 +136,7 @@ class GA:
             rand = random.uniform(0, 1)
             if rand <= self.mutation_rate :
                 # currently limiting the size of the random to current val +- 2
-                new_val = random.uniform(childVector2[i] - 2, childVector2[i] + 2)
+                new_val = random.uniform(childVector1[i] - 2, childVector1[i] + 2)
                 childVector1[i] = new_val
         for i in range(len(childVector2)):
             rand = random.uniform(0, 1)
