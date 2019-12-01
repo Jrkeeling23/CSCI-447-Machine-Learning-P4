@@ -228,7 +228,8 @@ class NetworkClient:
             for index, row in self.data_instance.train_df.iterrows():
                 j += 1
                 if j % stoch == 0:
-                    changes, length = network.gradient_descent(layers, eta, alpha, comp_group, group)
+                    #changes, length = network.gradient_descent(layers, eta, alpha, comp_group, group)
+                    network.gradient_descent(layers, eta, alpha, comp_group, group)
                     # print(check_group)
                     # print(output_layer)
                     # print(comp_group)
@@ -277,9 +278,9 @@ class NetworkClient:
             #     my_break = False
             #     test += abs(changes[i])
             #  TODO: put in if statement checking cost
-            if all(abs(x) <= checker for x in changes):  # changes.all() <= checker:  # abs(changes[i])
+            #if all(abs(x) <= checker for x in changes):  # changes.all() <= checker:  # abs(changes[i])
                 # my_break = True
-                break
+               # break
         # print(my_break)
         # if my_break:
         #     break

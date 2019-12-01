@@ -49,7 +49,7 @@ class DE:
         fitness = client.testing(layers, outputs, network)
         # print("Fitness for this individual is: ")
         # print(fitness)
-        print("Calculated Fitness ")
+        print("Calculated Fitness " )
         return fitness
 
     # init the population of the GA
