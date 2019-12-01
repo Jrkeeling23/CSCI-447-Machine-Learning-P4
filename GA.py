@@ -162,7 +162,8 @@ class GA:
             self.population[index1] = child1
 
         if child2.fitness >= parent2.fitness:
-            self.population[index2] = parent2
+            # replacee child2's parent
+            self.population[index2] = child2
 
         print("Finished Performing Crossover + Mutation")
 

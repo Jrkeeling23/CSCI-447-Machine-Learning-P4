@@ -195,9 +195,9 @@ class MyTestCase(unittest.TestCase):
 
     def test_ga_init(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
-        df = data.df.sample(n=400)
+        df = data.df.sample(n=1000)
         data.split_data(data_frame=df)
-        gen_algo = GA(100, 2, data, max_runs=10000, mutation_rate=.1)
+        gen_algo = GA(100, 4, data, max_runs=10000, mutation_rate=.01)
         bestC = gen_algo.run_GA()
         print("Best fitting vector")
         print(bestC.net_vector)
