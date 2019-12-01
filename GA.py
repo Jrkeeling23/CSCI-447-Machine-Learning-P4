@@ -52,7 +52,7 @@ class GA:
         fitness = client.testing(layers, outputs, network)
         # print("Fitness for this individual is: ")
         # print(fitness)
-        print("Calculated Fitness")
+        print("Calculated Fitness ", fitness)
         return fitness
 
     # init the population of the GA
@@ -107,7 +107,7 @@ class GA:
                 bestSeen = chrome
                 bestIndex = tourny.index(chrome)
 
-        print("Returning most fit example in tournament")
+        print("Returning most fit example in tournament ", bestSeen.fitness)
         # return best value
         return bestSeen, bestIndex
 
@@ -157,6 +157,7 @@ class GA:
         child1.fitness = self.CalcFitness(child1.network, child1Layers, child1.outputs)
         child2.fitness = self.CalcFitness(child2.network, child2Layers, child2.outputs)
         # compare the fitness of children vs parents, replace parents if better
+
         if child1.fitness >= parent1.fitness:
             # replace the parent
             self.population[index1] = child1
@@ -176,6 +177,8 @@ class GA:
         # counter for maxruns
         runs = 0
         while runs < self.max_runs:
+            if runs % 100 == 0:
+                print("Iteration: ", runs)
             runs += 1
             # perform tournament selection to get 2 parents
             parent1, index1 = self.Tourny_Selection()
