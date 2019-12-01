@@ -52,7 +52,7 @@ class GA:
         fitness = client.testing(layers, outputs, network)
         # print("Fitness for this individual is: ")
         # print(fitness)
-        print("Calculated Fitness ", fitness)
+        print("Calculated Fitness ")
         return fitness
 
     # init the population of the GA
@@ -107,7 +107,7 @@ class GA:
                 bestSeen = chrome
                 bestIndex = tourny.index(chrome)
 
-        print("Returning most fit example in tournament ", bestSeen.fitness)
+        print ("Returning most fit example in tournament ")
         # return best value
         return bestSeen, bestIndex
 
