@@ -164,7 +164,7 @@ class DE:
         runs = 0
         while runs < self.max_runs:
             if runs % 100 == 0:
-                print("Iteration: ", runs)
+                print("---------------- Iteration: ", runs, " -----------------------------")
             runs += 1
 
             # go through pop and createe trial vectors
