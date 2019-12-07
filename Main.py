@@ -1,6 +1,10 @@
 from Data import Data
 import pandas as pd
 import csv
+from DE import  DE
+from GA import GA
+from NeuralNetwork import NeuralNetwork
+from NeuralNetwork import  NetworkClient
 
 def load_data():
     """
@@ -20,9 +24,48 @@ def load_data():
     # reg: machine, forestfires, wine
 
 
+def run_pop_algos_for_vid():
+    "run the pop algos for proj4 vid"
+    # setup data to use
+    data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
+    # take a sample as results do not matter for this
+    df = data.df.sample(100)
+    data.split_data(data_frame=df)
+    gen_algo = GA(1000, 4, data, max_runs=1000, mutation_rate=1)
+    print("----------------------- RUNNING THE GA -----------------")
+    # get chromosome object from GA
+    bestC = gen_algo.run_GA()
+    print("Best fitting vector From the GA")
+    print(bestC.net_vector)
+    client = NetworkClient(data)
+    network = NeuralNetwork(data)
+    new_Net = network.networkize(bestC.layers, bestC.net_vector)
+    print("Printing testing results from the GA")
+    print(client.testing(new_Net, bestC.outputs, bestC.network))
+    print("----------------------- GA DONE -----------------")
+    print("---------------------------------------------------")
+    print("---------------------------------------------------")
+    print("---------------------------------------------------")
+    print("----------------------- RUNNING DE -----------------")
+    de_algo = DE(10, .7, 2, 4, data, max_runs=100, mutation_rate=.03)
+    bestC = de_algo.run_DE()
+    print("Best fitting vector from DE")
+    print(bestC.net_vector)
+    client = NetworkClient(data)
+    network = NeuralNetwork(data)
+    new_Net = network.networkize(bestC.layers, bestC.net_vector)
+    print("Printing testing results from DE")
+    print(client.testing(new_Net, bestC.outputs, bestC.network))
+    print("----------------------- DE DONE -----------------")
+
+
+
 class Main:
     def __init__(self):
         self.data_list = load_data()
 
+
     # def perform_KNN(self, k_val, query_point, train_data):
 
+if __name__ == '__main__':
+    run_pop_algos_for_vid()

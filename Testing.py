@@ -176,7 +176,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_it_all(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
-        df = data.df
+        df = data.df.sample(100)
         data.split_data(data_frame=df)
         client = NetworkClient(data)
         layers, outputset, network = client.train_it(1, 10, .1, .5, 10)
@@ -196,9 +196,9 @@ class MyTestCase(unittest.TestCase):
 
     def test_ga_init(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
-        df = data.df
+        df = data.df.sample(100)
         data.split_data(data_frame=df)
-        gen_algo = GA(100, 4, data, max_runs=1000, mutation_rate=.03)
+        gen_algo = GA(1000, 4, data, max_runs=1000, mutation_rate=1)
         bestC = gen_algo.run_GA()
         print("Best fitting vector")
         print(bestC.net_vector)
@@ -211,9 +211,9 @@ class MyTestCase(unittest.TestCase):
 
     def test_de(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
-        df = data.df
+        df = data.df.sample(100)
         data.split_data(data_frame=df)
-        de_algo = DE(10, .7, 2, 4, data, max_runs=1000, mutation_rate=.03)
+        de_algo = DE(50, .7, 2, 4, data, max_runs=100, mutation_rate=.03)
         bestC = de_algo.run_DE()
         print("Best fitting vector")
         print(bestC.net_vector)

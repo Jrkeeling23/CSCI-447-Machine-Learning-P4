@@ -294,6 +294,7 @@ class NetworkClient:
             if network.prediction(output_set, output_prediction) == row[self.data_instance.label_col]:
                 correct += 1
             total += 1
+        # print( "Correctly Predicted ", correct, " Total Predicted ", total)
         return (correct/total)
 
 

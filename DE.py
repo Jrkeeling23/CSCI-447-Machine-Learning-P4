@@ -182,9 +182,9 @@ class DE:
 
                     trail_vec_partial = self.beta * (np.subtract(vector2.net_vector, vector3.net_vector))
 
-
                     # now calculate the trial vector using these partial vectors
                     trial_vector = np.add(trial_vector, trail_vec_partial)
+
                 # create a chromosome to represent trial vector
                 trial_chromosome = Chromosome(trial_vector, self.population[i].network,
                                               self.population[i].layers, self.population[i].outputs)
