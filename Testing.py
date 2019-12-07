@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 # from Cluster import KNN
 from NeuralNetwork import NeuralNetwork, NetworkClient
+from PSO import PSO
 import collections
 
 
@@ -189,6 +190,21 @@ class MyTestCase(unittest.TestCase):
         vector = network.vectorize(layers)
         print(vector)
         new_layers = network.networkize(layers, vector)
+
+    def test_pso(self):
+        data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
+        df = data.df.sample(n=400)
+        data.split_data(data_frame=df)
+        pso = PSO(data, 50, 7, 2)
+        for i in range(200):
+            pso.move_them(2, 3, .3)
+            print(pso.group_best[1], '\n')
+
+    def test_pso_accuracy(self):
+        data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
+        data.split_data(data.df)
+        pso = PSO(data, 50, 7, 2)
+        pso.move_them(2,3,.3)
 
 if __name__ == '__main__':
     unittest.main()

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe3c200c-6a85-4460-b0f7-d8ff22b215d1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/PSO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeuralNetwork.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuralNetwork.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Testing.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -11,12 +14,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NeuralNetwork.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="80">
+              <caret line="79" column="15" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="15" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -24,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Testing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="187" column="23" selection-start-line="187" selection-start-column="23" selection-end-line="187" selection-end-column="23" />
+            <state relative-caret-position="273">
+              <caret line="200" column="40" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -36,11 +39,51 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PSO.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="939">
+              <caret line="69" column="20" lean-forward="true" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>kmeans</find>
+      <find>testing</find>
+      <find>networkize</find>
+      <find>make_input_layer</find>
+      <find>sigmoid</find>
+      <find>vector</find>
+      <find>cost</find>
+      <find>prediction</find>
+      <find>fitness</find>
+      <find>networki</find>
+      <find>random</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -49,8 +92,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/NeuralNetwork.py" />
         <option value="$PROJECT_DIR$/Testing.py" />
+        <option value="$PROJECT_DIR$/NeuralNetwork.py" />
+        <option value="$PROJECT_DIR$/PSO.py" />
       </list>
     </option>
   </component>
@@ -65,6 +109,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -76,11 +121,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Networks/Program4/CSCI446_PA4" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -94,7 +138,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for Testing.MyTestCase.test_vectorize_and_back">
+  <component name="RunManager" selected="Python tests.Unittests for Testing.MyTestCase.test_pso">
+    <configuration name="Unittests for Testing.MyTestCase.test_accuracy" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="CSCI-447-Machine-Learning-P4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Testing.MyTestCase.test_accuracy&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Unittests for Testing.MyTestCase.test_layers" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="CSCI-447-Machine-Learning-P4" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -106,6 +164,34 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;Testing.MyTestCase.test_layers&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Testing.MyTestCase.test_pso" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="CSCI-447-Machine-Learning-P4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Testing.MyTestCase.test_pso&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Testing.MyTestCase.test_pso_accuracy" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="CSCI-447-Machine-Learning-P4" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Testing.MyTestCase.test_pso_accuracy&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -125,6 +211,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests for Testing.MyTestCase.test_pso" />
+        <item itemvalue="Python tests.Unittests for Testing.MyTestCase.test_pso_accuracy" />
+        <item itemvalue="Python tests.Unittests for Testing.MyTestCase.test_accuracy" />
         <item itemvalue="Python tests.Unittests for Testing.MyTestCase.test_vectorize_and_back" />
         <item itemvalue="Python tests.Unittests for Testing.MyTestCase.test_layers" />
       </list>
@@ -144,36 +233,44 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_Testing_MyTestCase_test_layers - 2019.11.19 at 13h 51m 28s.xml">
-      <configuration name="Unittests for Testing.MyTestCase.test_layers" configurationId="tests" />
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 42m 00s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_Testing_MyTestCase_test_layers - 2019.11.19 at 13h 52m 06s.xml">
-      <configuration name="Unittests for Testing.MyTestCase.test_layers" configurationId="tests" />
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 42m 23s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_Testing_MyTestCase_test_layers - 2019.11.19 at 14h 44m 30s.xml">
-      <configuration name="Unittests for Testing.MyTestCase.test_layers" configurationId="tests" />
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 42m 39s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_Testing_MyTestCase_test_layers - 2019.11.19 at 14h 44m 47s.xml">
-      <configuration name="Unittests for Testing.MyTestCase.test_layers" configurationId="tests" />
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 43m 22s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_Testing_MyTestCase_test_vectorize_and_back - 2019.11.19 at 15h 22m 17s.xml">
-      <configuration name="Unittests for Testing.MyTestCase.test_vectorize_and_back" configurationId="tests" />
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 43m 57s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_Testing_MyTestCase_test_vectorize_and_back - 2019.11.19 at 15h 23m 53s.xml">
-      <configuration name="Unittests for Testing.MyTestCase.test_vectorize_and_back" configurationId="tests" />
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 44m 40s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 46m 52s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 47m 12s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 49m 25s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Testing_MyTestCase_test_pso - 2019.12.07 at 14h 50m 34s.xml">
+      <configuration name="Unittests for Testing.MyTestCase.test_pso" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15862525" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
@@ -181,28 +278,51 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/NeuralNetwork.py">
+    <entry file="file://$PROJECT_DIR$/Testing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="273">
+          <caret line="200" column="40" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Testing.py">
+    <entry file="file://$PROJECT_DIR$/Data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="187" column="23" selection-start-line="187" selection-start-column="23" selection-end-line="187" selection-end-column="23" />
+        <state>
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PSO.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="939">
+          <caret line="69" column="20" lean-forward="true" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NeuralNetwork.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="79" column="15" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
