@@ -6,10 +6,17 @@ import numpy as np
 class NeuralNetwork:
     def __init__(self, data_instance): #, edited_data, compressed_data, centroids_cluster, medoids_cluster):
         self.data_instance = data_instance
+        self.layers = []
+        self.personal_best = None
+        self.output_vector = None
+        self.fitness = None
+        self.velocity = None
         # self.edited_data = edited_data
         # self.compressed_data = compressed_data
         # self.centroids_cluster = centroids_cluster
         # self.medoids_cluster = medoids_cluster
+
+    # self.layers = []
 
     def make_layers(self, no_of_layers, no_of_nodes):
         """
@@ -19,47 +26,47 @@ class NeuralNetwork:
         """
         # row = self.data_instance.df.shape[0]-1
         first_layer_size = self.data_instance.df.shape[1]-1
-        layers = []
-        layers.append(Layer(first_layer_size))
-        layers[0].make_nodes()
+        self.layers = []
+        self.layers.append(Layer(first_layer_size))
+        self.layers[0].make_nodes()
         if no_of_layers!=0:
             for i in range(no_of_layers):
-                layers.append(Layer(no_of_nodes))
-                layers[i+1].make_nodes()
+                self.layers.append(Layer(no_of_nodes))
+                self.layers[i+1].make_nodes()
                 if i+1 == no_of_layers:
-                    outputs = self.set_output()
-                    layers.append(Layer(len(outputs)))
-                    layers[i+2].make_nodes()
-                for j in range(len(layers[i].nodes)):
-                    for f in range(len(layers[i+1].nodes)):
-                        layers[i].nodes[j].outgoing_weights.append(Weight(layers[i].nodes[j], layers[i+1].nodes[f]))
-                for f in range(len(layers[i+1].nodes)):
-                    for j in range(len(layers[i].nodes)):
-                        layers[i+1].nodes[f].incoming_weights.append(layers[i].nodes[j].outgoing_weights[f])
+                    self.output_vector = self.set_output()
+                    self.layers.append(Layer(len(self.output_vector)))
+                    self.layers[i+2].make_nodes()
+                for j in range(len(self.layers[i].nodes)):
+                    for f in range(len(self.layers[i+1].nodes)):
+                        self.layers[i].nodes[j].outgoing_weights.append(Weight(self.layers[i].nodes[j], self.layers[i+1].nodes[f]))
+                for f in range(len(self.layers[i+1].nodes)):
+                    for j in range(len(self.layers[i].nodes)):
+                        self.layers[i+1].nodes[f].incoming_weights.append(self.layers[i].nodes[j].outgoing_weights[f])
         else:
-            outputs = self.set_output()
-            layers.append(Layer(len(outputs)))
-            layers[1].make_nodes()
-            for j in range(len(layers[0].nodes)):
-                for f in range(len(layers[1].nodes)):
-                    layers[0].nodes[j].outgoing_weights.append(Weight(layers[0].nodes[j], layers[1].nodes[f]))
-            for f in range(len(layers[1].nodes)):
-                for j in range(len(layers[0].nodes)):
-                    layers[1].nodes[f].incoming_weights.append(layers[0].nodes[j].outgoing_weights[f])
-        return layers, outputs
+            self.output_vector = self.set_output()
+            self.layers.append(Layer(len(self.output_vector)))
+            self.layers[1].make_nodes()
+            for j in range(len(self.layers[0].nodes)):
+                for f in range(len(self.layers[1].nodes)):
+                    self.layers[0].nodes[j].outgoing_weights.append(Weight(self.layers[0].nodes[j], self.layers[1].nodes[f]))
+            for f in range(len(self.layers[1].nodes)):
+                for j in range(len(self.layers[0].nodes)):
+                    self.layers[1].nodes[f].incoming_weights.append(self.layers[0].nodes[j].outgoing_weights[f])
+        return self.layers, self.output_vector
 
-    def vectorize(self, layers):
+    def vectorize(self):  # , layers):
         vector = []
-        for i in range(1, len(layers), 1):
-            for n in range(len(layers[i].nodes)):
-                for w in range(len(layers[i].nodes[n].incoming_weights)):
-                    vector.append(layers[i].nodes[n].incoming_weights[w].weight)
-                vector.append(layers[i].nodes[n].bias)
+        for i in range(1, len(self.layers), 1):
+            for n in range(len(self.layers[i].nodes)):
+                for w in range(len(self.layers[i].nodes[n].incoming_weights)):
+                    vector.append(self.layers[i].nodes[n].incoming_weights[w].weight)
+                vector.append(self.layers[i].nodes[n].bias)
         return vector
 
-    def networkize(self, layers, vector):
+    def networkize(self, vector):  # layers, vector):
         j=0
-        new_network = layers.copy()
+        new_network = self.layers.copy()
         for i in range(1, len(new_network), 1):
             for n in range(len(new_network[i].nodes)):
                 for w in range(len(new_network[i].nodes[n].incoming_weights)):
@@ -70,34 +77,10 @@ class NeuralNetwork:
         return new_network
 
 
-        # point_nets = []
-        # for index, row in self.data_instance.train_df.iterrows():
-        #     layers = []
-        #     layers.append(Layer(len(row.drop(columns=self.data_instance.label_col))))
-        #     layers[0].make_input_layer(row.drop(columns=self.data_instance.label_col))
-        #     for i in range(no_of_layers):
-        #         layers.append(Layer(no_of_nodes))
-        #         layers[i+1].make_nodes()
-        #         if i+1 == no_of_layers:
-        #             layers.append(Layer(len(self.set_output())))
-        #             layers[i+2].make_nodes()
-        #         #     print("sup")
-        #         # print(i)
-        #         # print(layers[1].no_of_nodes)
-        #         for j in range(layers[i].no_of_nodes):
-        #             for f in range(len(layers[i+1].nodes)):
-        #                 layers[i].nodes[j].outgoing_weights.append(Weight(layers[i].nodes[j], layers[i+1].nodes[f]))
-        #                 layers[i + 1].nodes[f].incoming_weights = layers[i].nodes[j].outgoing_weights
-        #     for j in range(len(layers[-2].nodes)):
-        #         for f in range(len(layers[-1].nodes)):
-        #             layers[-2].nodes[j].outgoing_weights.append(Weight(layers[-2].nodes[j], layers[-1].nodes[f]))
-        #             layers[-1].nodes[f].incoming_weights = layers[-2].nodes[j].outgoing_weights
-        #     point_nets.append(layers)
-
-    def sigmoid(self, layers, input):
+    def sigmoid(self, input):
         # i = 0
-        layers[0].make_input_layer(input)
-        for layer in layers[1:]:
+        self.layers[0].make_input_layer(input)
+        for layer in self.layers[1:]:
             for node in layer.nodes:
                 sigmoid_total = 0
                 # print(node.bias_change)
@@ -114,7 +97,7 @@ class NeuralNetwork:
                 # except:
 
         output = []
-        for node in layers[-1].nodes:
+        for node in self.layers[-1].nodes:
             output.append(node.value)
         return output
 
@@ -172,7 +155,7 @@ class NeuralNetwork:
         return  # need to get something to return still
 
     def backpropagation(self, layers, input, compare):
-        self.sigmoid(layers, input)
+        self.sigmoid(input)
         for i in range(len(layers)-1, 1, -1):
             if i == len(layers)-1:
                 j=0
@@ -212,7 +195,7 @@ class NetworkClient:
         costs = []
         compare = []
         for index, row in self.data_instance.train_df.iterrows():
-            output_predictions.append(network.sigmoid(layers, row.drop(self.data_instance.label_col)))
+            output_predictions.append(network.sigmoid(row.drop(self.data_instance.label_col)))
             cos, comp = network.cost(output_predictions[-1], output_layer, row[self.data_instance.label_col])
             costs.append(cos)
             compare.append(comp)
@@ -258,7 +241,7 @@ class NetworkClient:
             output_predictions = []
             costs = []
             for index, row in self.data_instance.train_df.iterrows():
-                output_predictions.append(network.sigmoid(layers, row.drop(self.data_instance.label_col)))
+                output_predictions.append(network.sigmoid(row.drop(self.data_instance.label_col)))
                 costs.append(network.cost(output_predictions[-1], output_layer, row[self.data_instance.label_col])[0])
             # print(changes)
             if saved is None:
@@ -290,7 +273,7 @@ class NetworkClient:
         correct = 0
         total = 0
         for index, row in self.data_instance.test_df.iterrows():
-            output_prediction = network.sigmoid(layers, row.drop(self.data_instance.label_col))
+            output_prediction = network.sigmoid(row.drop(self.data_instance.label_col))
             if network.prediction(output_set, output_prediction) == row[self.data_instance.label_col]:
                 correct += 1
             total += 1
@@ -331,7 +314,7 @@ class Weight:
     def __init__(self, L_neuron, R_neuron):
         self.L_neuron = L_neuron
         self.R_neuron = R_neuron
-        self.weight = float(random.randint(-1, 1))/100
+        self.weight = random.uniform(-1, 1)
         self.weight_change = 0
         self.prev_change = 0
         self.momentum_cof = .5
