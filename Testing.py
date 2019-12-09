@@ -206,7 +206,7 @@ class MyTestCase(unittest.TestCase):
         print(bestC.net_vector)
         client = NetworkClient(data)
         network = NeuralNetwork(data)
-        new_Net = network.networkize(bestC.layers, bestC.net_vector)
+        new_Net = network.GADEnet(bestC.layers, bestC.net_vector)
         print("Printing testing results")
         print(client.testing(new_Net, bestC.outputs, bestC.network))
 
@@ -221,7 +221,7 @@ class MyTestCase(unittest.TestCase):
         print(bestC.net_vector)
         client = NetworkClient(data)
         network = NeuralNetwork(data)
-        new_Net = network.networkize(bestC.layers, bestC.net_vector)
+        new_Net = network.GADEnet(bestC.layers, bestC.net_vector)
         print("Printing testing results")
         print(client.testing(new_Net, bestC.outputs, bestC.network))
 
@@ -230,10 +230,10 @@ class MyTestCase(unittest.TestCase):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
         df = data.df.sample(n=400)
         data.split_data(data_frame=df)
-        pso = PSO(data, 300, 5, 1)
+        pso = PSO(data, 300, 2, 1)
         for i in range(200):
             print(i)
-            pso.move_them(0, 5, .2)
+            pso.move_them(2, 3, .4)
             print(pso.group_best[1], '\n')
 
     def test_pso_accuracy(self):

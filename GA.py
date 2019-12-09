@@ -65,7 +65,7 @@ class GA:
             # create a new random network, create a new chromosome with it
             network = NeuralNetwork(data_instance=data)
             layers, outputs = network.make_layers(self.layers, self.nodes)
-            net_vector = network.vectorize(layers)
+            net_vector = network.GADEvec(layers)
             newPop = Chromosome(net_vector, network, layers, outputs)
             self.population.append(newPop)
             # calculate fitness of each pop member
@@ -151,8 +151,8 @@ class GA:
         child1 = Chromosome(childVector1, parent1.network, parent1.layers, parent1.outputs)
         child2 = Chromosome(childVector2, parent2.network, parent2.layers, parent2.outputs)
         # turn vectors into layers for fitness
-        child1Layers = child1.network.networkize(child1.layers, child1.net_vector)
-        child2Layers = child2.network.networkize(child2.layers, child2.net_vector)
+        child1Layers = child1.network.GADEnet(child1.layers, child1.net_vector)
+        child2Layers = child2.network.GADEnet(child2.layers, child2.net_vector)
         # finish setting up fitness of each child
         child1.fitness = self.CalcFitness(child1.network, child1Layers, child1.outputs)
         child2.fitness = self.CalcFitness(child2.network, child2Layers, child2.outputs)

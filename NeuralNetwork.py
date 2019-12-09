@@ -76,6 +76,26 @@ class NeuralNetwork:
                 j+=1
         return new_network
 
+    def GADEnet(self, layers, vector):
+        j = 0
+        new_network = layers.copy()
+        for i in range(1, len(new_network), 1):
+            for n in range(len(new_network[i].nodes)):
+                for w in range(len(new_network[i].nodes[n].incoming_weights)):
+                    new_network[i].nodes[n].incoming_weights[w].weight = vector[j]
+                    j += 1
+                new_network[i].nodes[n].bias = vector[j]
+                j += 1
+        return new_network
+
+    def GADEvec(self, layers):
+        vector = []
+        for i in range(1, len(layers), 1):
+            for n in range(len(layers[i].nodes)):
+                for w in range(len(layers[i].nodes[n].incoming_weights)):
+                    vector.append(layers[i].nodes[n].incoming_weights[w].weight)
+                vector.append(layers[i].nodes[n].bias)
+        return vector
 
     def sigmoid(self, input):
         # i = 0
@@ -83,18 +103,10 @@ class NeuralNetwork:
         for layer in self.layers[1:]:
             for node in layer.nodes:
                 sigmoid_total = 0
-                # print(node.bias_change)
                 for weight in node.incoming_weights:
-                    # print(weight.weight_change)
-                    # print(len(layers))
-                    # print(len(layers[1:]))
-                    # print(weight.get_weight())
                     sigmoid_total += weight.get_weight() * weight.L_neuron.value
                 sigmoid_total += node.bias
-                # print(sigmoid_total)
-                # try:
                 node.value = 1/(1 + np.exp(-sigmoid_total))
-                # except:
 
         output = []
         for node in self.layers[-1].nodes:
