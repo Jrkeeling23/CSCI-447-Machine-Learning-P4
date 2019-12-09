@@ -12,22 +12,26 @@ class PSO:
         self.group_best = None
 
     def move_them(self, c1, c2, omega):
+        print(self.particles[0].fitness)
         for particle in self.particles:
             fit = 0
+            dumb = 0
             for index, row in self.data_instance.train_df.iterrows():
                 acc = self.accuracy(particle.sigmoid(row.drop(self.data_instance.label_col)), particle.output_vector, row[self.data_instance.label_col])
                 fit += acc
+                dumb += 1
                 # print(acc)
                 # print(fit)
-            particle.fitness = fit/self.data_instance.train_df.shape[0]
+            particle.fitness = fit/dumb
             # print(particle.vectorize())
             # print(self.data_instance.train_df.shape)
-            print(particle.fitness)
+            # print(particle.fitness)
 
             if particle.personal_best == None:
                 particle.personal_best = [particle.vectorize(), particle.fitness]
             elif particle.personal_best[1]<particle.fitness:
                 particle.personal_best = [particle.vectorize(), particle.fitness]
+            # print(particle.personal_best[1])
 
             if self.group_best == None:
                 self.group_best = [particle.vectorize(), particle.fitness]
@@ -38,6 +42,7 @@ class PSO:
             r1 = random.uniform(0, 1)
             r2 = random.uniform(0, 1)
             vector = particle.vectorize()
+            # print(vector)
             var1 = c1*r1
             var2 = c2*r2
             if particle.velocity == None:
@@ -46,27 +51,29 @@ class PSO:
                 particle.velocity[loc] = omega*particle.velocity[loc]+var1*(particle.personal_best[0][loc]-vector[loc])+var2*(self.group_best[0][loc]-vector[loc])
             for i in range(len(vector)):
                 vector[i] = vector[i]+particle.velocity[i]
+            # print(particle.velocity)
             particle.layers = particle.networkize(vector)
-
-
-
-
+            # print(particle.vectorize(), '\n')
+        print(self.particles[0].fitness)
 
     def accuracy(self, pred_output, output_layer, actual):
         high_value = 0
-        print(pred_output)
-        print(output_layer)
-        print(actual)
+        # print(pred_output)
+        # print(output_layer)
+        # print(actual)
         for i in range(len(output_layer)):
             if output_layer[i] == actual:
                 high_value = i
         prediction = 0
+        j = 0
         for f in range(len(pred_output)):
-            if pred_output[f]>prediction:
+            # print(f)
+            if pred_output[f] > pred_output[prediction]:
+                # print(pred_output[f], prediction)
                 prediction = f
-        print(prediction)
-        print(high_value)
+        # print(prediction)
+        # print(high_value)
         if prediction != high_value:
-            return 1
-        else:
             return 0
+        else:
+            return 1

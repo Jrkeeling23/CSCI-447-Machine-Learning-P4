@@ -149,7 +149,8 @@ class MyTestCase(unittest.TestCase):
         data.split_data(data_frame=df)
         network = NeuralNetwork(data_instance=data)
         layers, output_set = network.make_layers(2, 6)
-        output_prediction = network.sigmoid(layers, df.iloc[0].drop(data.label_col))
+        output_prediction = network.sigmoid(df.iloc[0].drop(data.label_col))
+        print(output_set, output_prediction)
         print(network.prediction(output_set, output_prediction))
 
     def test_cost(self):
@@ -187,24 +188,25 @@ class MyTestCase(unittest.TestCase):
         data.split_data(data_frame=df)
         network = NeuralNetwork(data_instance=data)
         layers, outputs = network.make_layers(2, 5)
-        vector = network.vectorize(layers)
+        vector = network.vectorize()
         print(vector)
-        new_layers = network.networkize(layers, vector)
+        new_layers = network.networkize(vector)
 
     def test_pso(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
         df = data.df.sample(n=400)
         data.split_data(data_frame=df)
-        pso = PSO(data, 50, 7, 2)
+        pso = PSO(data, 300, 5, 1)
         for i in range(200):
-            pso.move_them(2, 3, .3)
+            print(i)
+            pso.move_them(0, 5, .2)
             print(pso.group_best[1], '\n')
 
     def test_pso_accuracy(self):
         data = Data('abalone', pd.read_csv(r'data/abalone.data', header=None), 8, False)
         data.split_data(data.df)
         pso = PSO(data, 50, 7, 2)
-        pso.move_them(2,3,.3)
+        pso.move_them(0,3,.3)
 
 if __name__ == '__main__':
     unittest.main()
